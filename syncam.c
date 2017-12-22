@@ -1,3 +1,24 @@
+// Copyright (c) 2016 Alexey Safronov
+
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+
+
 #include <gst/gst.h>
 #include <glib/gprintf.h>
 
@@ -42,7 +63,7 @@ int main (int argc, char *argv[]) {
 	gst_bin_add_many(GST_BIN(pipeline), src_b, rate_b, encoder_b, sink_b, NULL);
 
 	// make caps
-	caps_a = gst_caps_new_simple("video/x-raw", 
+	caps_a = gst_caps_new_simple("video/x-raw",
 							   "width", G_TYPE_INT, WIDTH,
 							   "height", G_TYPE_INT, HEIGHT,
 							   NULL );
@@ -50,7 +71,7 @@ int main (int argc, char *argv[]) {
 									"framerate", GST_TYPE_FRACTION, FPS, 1,
 									NULL);
 
-	caps_b = gst_caps_new_simple("video/x-raw", 
+	caps_b = gst_caps_new_simple("video/x-raw",
 							   "width", G_TYPE_INT, WIDTH,
 							   "height", G_TYPE_INT, HEIGHT,
 							   NULL );
@@ -94,9 +115,9 @@ int main (int argc, char *argv[]) {
 
 	// setting elements
 	g_object_set(sink_a, "location", "shot%d_a.jpg", NULL);
-	g_object_set(src_a, "device", "/dev/video0", "num-buffers", 5, NULL);	
+	g_object_set(src_a, "device", "/dev/video0", "num-buffers", 5, NULL);
 	g_object_set(sink_b, "location", "shot%d_b.jpg", NULL);
-	g_object_set(src_b, "device", "/dev/video1", "num-buffers", 5, NULL);	
+	g_object_set(src_b, "device", "/dev/video1", "num-buffers", 5, NULL);
 	int index = 0;
 
 	// take a bus
@@ -109,7 +130,7 @@ int main (int argc, char *argv[]) {
 		// play pipeline and wait for messages
 		gst_element_set_state(pipeline, GST_STATE_PLAYING);
 		gst_bus_timed_pop_filtered(bus, GST_CLOCK_TIME_NONE, GST_MESSAGE_EOS | GST_MESSAGE_ERROR);
-		
+
 		// make pipeline NULL
 		gst_element_set_state(pipeline, GST_STATE_NULL);
 		index += FPS;
