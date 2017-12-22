@@ -1,7 +1,7 @@
 cmake_minimum_required( VERSION 2.6 )
 ##############################################################################
 project( syncam )
-set( SOURCE_FILES syncam.c )
+set( SOURCE_FILES syncam.c functions.c )
 
 # if you need libraries that pkg-config can find set ON instead OFF
 option( USE_GSTREAMER         "Want GStreamer?"         ON )
